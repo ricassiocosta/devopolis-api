@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const dev = require('./Dev')
 
 const DevSchema = new mongoose.Schema({
     name: String,
@@ -9,9 +8,10 @@ const DevSchema = new mongoose.Schema({
     techs: [String],
     posts: Number,
     collab_Project: Number,
-    friendList: {
-        type: dev
-    }
+    friendList: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Dev'
+    }]
 })
 
 module.exports = mongoose.model('Dev', DevSchema)
