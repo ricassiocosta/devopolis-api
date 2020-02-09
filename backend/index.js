@@ -1,6 +1,12 @@
 const express = require('express')
+const mongoose = require('mongoose')
 
 const server = express()
+server.use(express.json())
+mongoose.connect('mongodb+srv://***REMOVED***@mongodb-altlas-kizru.mongodb.net/test?retryWrites=true&w=majority', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
 
 server.get('/', (req, res) => {
     res.json({ message: 'Hello World' })
