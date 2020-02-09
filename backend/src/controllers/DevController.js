@@ -1,4 +1,5 @@
 const axios = require('axios')
+const mongoose = require('mongoose')
 const Dev = require('../models/Dev')
 const parseStringAsArray = require('../utils/parseStringAsArray')
 
@@ -29,5 +30,15 @@ module.exports = {
         }
     
         return res.json(dev)
+    },
+    async update(req, res) {
+        const { friend_id } = req.params
+        const { dev_id } = req.query
+
+        const dev = await Dev.updateOne(
+            {_id: dev_id},
+            {$push: {friendList: friend_id}}
+        )
+        return res.json({ok: true})
     }
 }
