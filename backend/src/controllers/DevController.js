@@ -32,17 +32,17 @@ module.exports = {
         return res.json(dev)
     },
     async update(req, res) {
-        const { friend_id } = req.params
+        const { followed_id } = req.params
         const { dev_id } = req.query
 
         const dev = await Dev.findOne({_id: dev_id})
         
-        if(!dev.friendList.includes(friend_id)){
+        if(!dev.followedList.includes(followed_id)){
             await Dev.updateOne(
                 {_id: dev_id},
-                {$push: {friendList: friend_id}}
+                {$push: {followedList: followed_id}}
             )
-            return res.json({ok: true})
+            return res.json({sucess: "Seguindo!"})
         } else {
             return res.json({error : "Você já o segue!"})
         }
