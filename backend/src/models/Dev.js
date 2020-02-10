@@ -8,7 +8,7 @@ const DevSchema = new mongoose.Schema({
     techs: [String],
     posts: Number,
     collab_Project: Number,
-    friendList: [{
+    followedList: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Dev'
     }]

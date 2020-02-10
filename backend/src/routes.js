@@ -21,6 +21,6 @@ routes.post('/post', upload.single('thumbnail'),PostController.store)
 routes.get('/dashboard', DashboardController.index)
 
 routes.get('/profile', ProfileController.index)
-routes.put('/profile/:friend_id', DevController.update)
+routes.put('/profile/:followed_id', DevController.update)
 
 module.exports = routes
