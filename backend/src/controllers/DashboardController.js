@@ -1,18 +1,18 @@
-const Post = require('../models/Post');
-const Dev = require('../models/Dev');
+const Post = require('../models/Post')
+const Dev = require('../models/Dev')
 
 module.exports = {
-  async index(req, res) {
-    const { dev_id } = req.headers;
+  async index (req, res) {
+    const { dev_id: devId } = req.headers
 
-    const dev = await Dev.findOne({ _id: dev_id });
-    dashboard_participants = dev.followedList;
+    const dev = await Dev.findOne({ _id: devId })
+    const dashboardParticipants = dev.followedList
     const posts = await Post.find({
       author: {
-        $in: dashboard_participants,
-      },
-    });
+        $in: dashboardParticipants
+      }
+    })
 
-    return res.json({ posts });
-  },
-};
+    return res.json({ posts })
+  }
+}

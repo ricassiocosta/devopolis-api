@@ -1,26 +1,26 @@
-const { Router } = require('express');
-const multer = require('multer');
-const uploadConfig = require('./config/upload');
+const { Router } = require('express')
+const multer = require('multer')
+const uploadConfig = require('./config/upload')
 
-const DevController = require('./controllers/DevController');
-const SearchController = require('./controllers/SearchController');
-const PostController = require('./controllers/PostController');
-const ProfileController = require('./controllers/ProfileController');
-const DashboardController = require('./controllers/DashboardController');
+const DevController = require('./controllers/DevController')
+const SearchController = require('./controllers/SearchController')
+const PostController = require('./controllers/PostController')
+const ProfileController = require('./controllers/ProfileController')
+const DashboardController = require('./controllers/DashboardController')
 
-const routes = Router();
-const upload = multer(uploadConfig);
+const routes = Router()
+const upload = multer(uploadConfig)
 
-routes.get('/devs', DevController.index);
-routes.post('/devs', DevController.store);
+routes.get('/devs', DevController.index)
+routes.post('/devs', DevController.store)
 
-routes.get('/search', SearchController.index);
+routes.get('/search', SearchController.index)
 
-routes.post('/post', upload.single('thumbnail'), PostController.store);
+routes.post('/post', upload.single('thumbnail'), PostController.store)
 
-routes.get('/dashboard', DashboardController.index);
+routes.get('/dashboard', DashboardController.index)
 
-routes.get('/profile', ProfileController.index);
-routes.put('/profile/:followed_id', DevController.update);
+routes.get('/profile', ProfileController.index)
+routes.put('/profile/:followed_id', DevController.update)
 
-module.exports = routes;
+module.exports = routes

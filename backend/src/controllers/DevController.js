@@ -1,49 +1,48 @@
-const axios = require('axios');
-const mongoose = require('mongoose');
-const Dev = require('../models/Dev');
-const parseStringAsArray = require('../utils/parseStringAsArray');
+const axios = require('axios')
+const Dev = require('../models/Dev')
+const parseStringAsArray = require('../utils/parseStringAsArray')
 
 module.exports = {
-  async index(req, res) {
-    const devs = await Dev.find();
-    return res.json(devs);
+  async index (req, res) {
+    const devs = await Dev.find()
+    return res.json(devs)
   },
 
-  async store(req, res) {
-    const { github_username, techs } = req.body;
+  async store (req, res) {
+    const { github_username: githubUsername, techs } = req.body
 
-    let dev = await Dev.findOne({ github_username });
+    let dev = await Dev.findOne({ github_username: githubUsername })
 
     if (!dev) {
-      const response = await axios.get(`https://api.github.com/users/${github_username}`);
-      const { name = login, avatar_url, bio } = response.data;
+      const response = await axios.get(`https://api.github.com/users/${githubUsername}`)
+      const { name, avatar_url: avatarUrl, bio } = response.data
 
-      const techsArray = parseStringAsArray(techs);
+      const techsArray = parseStringAsArray(techs)
 
       dev = await Dev.create({
-        github_username,
+        github_username: githubUsername,
         name,
-        avatar_url,
+        avatar_url: avatarUrl,
         bio,
-        techs: techsArray,
-      });
+        techs: techsArray
+      })
     }
 
-    return res.json(dev);
+    return res.json(dev)
   },
-  async update(req, res) {
-    const { followed_id } = req.params;
-    const { dev_id } = req.query;
+  async update (req, res) {
+    const { followed_id: followedId } = req.params
+    const { dev_id: devId } = req.query
 
-    const dev = await Dev.findOne({ _id: dev_id });
+    const dev = await Dev.findOne({ _id: devId })
 
-    if (!dev.followedList.includes(followed_id)) {
+    if (!dev.followedList.includes(followedId)) {
       await Dev.updateOne(
-        { _id: dev_id },
-        { $push: { followedList: followed_id } },
-      );
-      return res.json({ sucess: 'Seguindo!' });
+        { _id: devId },
+        { $push: { followedList: followedId } }
+      )
+      return res.json({ sucess: 'Seguindo!' })
     }
-    return res.json({ error: 'Você já o segue!' });
-  },
-};
+    return res.json({ error: 'Você já o segue!' })
+  }
+}
