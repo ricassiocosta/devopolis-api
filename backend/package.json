@@ -17,6 +17,18 @@
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.20.1",
+    "husky": "^4.2.1",
+    "lint-staged": "^10.0.7",
     "nodemon": "^2.0.2"
+  },
+  "lint-staged": {
+    "./src/*.js": [
+      "eslint . --fix"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn run lint:fix"
+    }
   }
 }
