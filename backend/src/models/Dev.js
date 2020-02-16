@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
 const DevSchema = new mongoose.Schema({
   name: String,
@@ -8,12 +8,10 @@ const DevSchema = new mongoose.Schema({
   techs: [String],
   posts: Number,
   collab_Project: Number,
-  followedList: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Dev'
-    }
-  ]
+  followedList: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Dev'
+  }]
 })
 
 module.exports = mongoose.model('Dev', DevSchema)

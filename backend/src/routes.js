@@ -1,12 +1,12 @@
-const { Router } = require('express');
-const multer = require('multer');
-const uploadConfig = require('./config/upload');
+const { Router } = require('express')
+const multer = require('multer')
+const uploadConfig = require('./config/upload')
 
-const DevController = require('./controllers/DevController');
-const SearchController = require('./controllers/SearchController');
-const PostController = require('./controllers/PostController');
-const ProfileController = require('./controllers/ProfileController');
-const DashboardController = require('./controllers/DashboardController');
+const DevController = require('./controllers/DevController')
+const SearchController = require('./controllers/SearchController')
+const PostController = require('./controllers/PostController')
+const ProfileController = require('./controllers/ProfileController')
+const DashboardController = require('./controllers/DashboardController')
 
 const routes = Router()
 const upload = multer(uploadConfig)

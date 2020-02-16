@@ -1,15 +1,10 @@
-{
+module.exports = {
     "env": {
-        "commonjs": true,
         "es6": true,
         "node": true
     },
     "extends": [
-        "prettier",
         "standard"
-    ],
-    "plugins": [
-        "prettier"
     ],
     "globals": {
         "Atomics": "readonly",
@@ -20,6 +15,5 @@
         "sourceType": "module"
     },
     "rules": {
-        "prettier/prettier": "error"
     }
-}
+};
