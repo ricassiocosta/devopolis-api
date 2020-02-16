@@ -1,5 +1,5 @@
-const Post = require('../models/Post');
-const Dev = require('../models/Dev');
+const Post = require('../models/Post')
+const Dev = require('../models/Dev')
 
 module.exports = {
   async index (req, res) {
