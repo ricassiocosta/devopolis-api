@@ -12,11 +12,13 @@ const routes = Router()
 const upload = multer(uploadConfig)
 
 routes.get('/devs', DevController.index)
+routes.get('/devs/:username', DevController.show)
 routes.post('/devs', DevController.store)
 
 routes.get('/search', SearchController.index)
 
-routes.post('/post', upload.single('thumbnail'), PostController.store)
+routes.post('/posts', upload.single('thumbnail'), PostController.store)
+routes.post('/posts/:username', PostController.show)
 
 routes.get('/dashboard', DashboardController.index)
 
