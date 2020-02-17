@@ -12,17 +12,16 @@ const routes = Router()
 const upload = multer(uploadConfig)
 
 routes.get('/devs', DevController.index)
-routes.get('/devs/:username', DevController.show)
-routes.post('/devs', DevController.store)
+routes.post('/devs/follow/:username', DevController.follow)
+routes.delete('/devs/unfollow/:username', DevController.unfollow)
 
 routes.get('/search', SearchController.index)
 
 routes.post('/posts', upload.single('thumbnail'), PostController.store)
-routes.post('/posts/:username', PostController.show)
+routes.get('/posts/:username', PostController.show)
 
 routes.get('/dashboard', DashboardController.index)
 
 routes.get('/profile', ProfileController.index)
-routes.put('/profile/:followed_id', DevController.update)
 
 module.exports = routes
