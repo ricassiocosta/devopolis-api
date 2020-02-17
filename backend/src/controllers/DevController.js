@@ -27,33 +27,35 @@ module.exports = {
     return res.json(dev)
   },
   async follow (req, res) {
-    const { followed_id: followedId } = req.params
-    const { dev_id: devId } = req.query
+    const { username } = req.params
+    const { dev_id: devId } = req.headers
 
     const dev = await Dev.findOne({ _id: devId })
+    const devToFollow = await Dev.findOne({ github_username: username })
 
-    if (!dev.followedList.includes(followedId)) {
+    if (devToFollow && !dev.followedList.includes(devToFollow._id)) {
       await Dev.updateOne(
         { _id: devId },
-        { $push: { followedList: followedId } }
+        { $push: { followedList: devToFollow._id } }
       )
       return res.json({ sucess: 'Seguindo!' })
     }
     return res.json({ error: 'Você já o segue!' })
   },
-  async update (req, res) {
-    const { followed_id: followedId } = req.params
-    const { dev_id: devId } = req.query
+  async unfollow (req, res) {
+    const { username } = req.params
+    const { dev_id: devId } = req.headers
 
     const dev = await Dev.findOne({ _id: devId })
+    const devToFollow = await Dev.findOne({ github_username: username })
 
-    if (!dev.followedList.includes(followedId)) {
+    if (devToFollow && dev.followedList.includes(devToFollow._id)) {
       await Dev.updateOne(
         { _id: devId },
-        { $push: { followedList: followedId } }
+        { $pull: { followedList: devToFollow._id } }
       )
-      return res.json({ sucess: 'Seguindo!' })
+      return res.json({ sucess: 'Você deixou de segui-lo!' })
     }
-    return res.json({ error: 'Você já o segue!' })
+    return res.json({ error: 'Você não o seguia!' })
   }
 }

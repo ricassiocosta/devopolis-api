@@ -24,9 +24,9 @@ module.exports = {
     return res.json(publication)
   },
   async show (req, res) {
-    const { dev_id: devId } = req.query
+    const { username } = req.params
 
-    const dev = Dev.findOne({ _id: devId })
+    const dev = await Dev.findOne({ github_username: username })
 
     const posts = await Post.find({
       author: dev._id
