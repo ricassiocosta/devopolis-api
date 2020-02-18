@@ -22,5 +22,16 @@ module.exports = {
     })
 
     return res.json(publication)
+  },
+  async show (req, res) {
+    const { username } = req.params
+
+    const dev = await Dev.findOne({ github_username: username })
+
+    const posts = await Post.find({
+      author: dev._id
+    })
+
+    return res.json(posts)
   }
 }

@@ -1,13 +1,11 @@
 const axios = require('axios')
 const Dev = require('../models/Dev')
-const parseStringAsArray = require('../utils/parseStringAsArray')
 
 module.exports = {
   async index (req, res) {
     const devs = await Dev.find()
     return res.json(devs)
   },
-
   async store (req, res) {
     const { github_username: githubUsername, techs } = req.body
 
@@ -17,32 +15,47 @@ module.exports = {
       const response = await axios.get(`https://api.github.com/users/${githubUsername}`)
       const { name, avatar_url: avatarUrl, bio } = response.data
 
-      const techsArray = parseStringAsArray(techs)
-
       dev = await Dev.create({
         github_username: githubUsername,
         name,
         avatar_url: avatarUrl,
         bio,
-        techs: techsArray
+        techs
       })
     }
 
     return res.json(dev)
   },
-  async update (req, res) {
-    const { followed_id: followedId } = req.params
-    const { dev_id: devId } = req.query
+  async follow (req, res) {
+    const { username } = req.params
+    const { dev_id: devId } = req.headers
 
     const dev = await Dev.findOne({ _id: devId })
+    const devToFollow = await Dev.findOne({ github_username: username })
 
-    if (!dev.followedList.includes(followedId)) {
+    if (devToFollow && !dev.followedList.includes(devToFollow._id)) {
       await Dev.updateOne(
         { _id: devId },
-        { $push: { followedList: followedId } }
+        { $push: { followedList: devToFollow._id } }
       )
       return res.json({ sucess: 'Seguindo!' })
     }
     return res.json({ error: 'Você já o segue!' })
+  },
+  async unfollow (req, res) {
+    const { username } = req.params
+    const { dev_id: devId } = req.headers
+
+    const dev = await Dev.findOne({ _id: devId })
+    const devToFollow = await Dev.findOne({ github_username: username })
+
+    if (devToFollow && dev.followedList.includes(devToFollow._id)) {
+      await Dev.updateOne(
+        { _id: devId },
+        { $pull: { followedList: devToFollow._id } }
+      )
+      return res.json({ sucess: 'Você deixou de segui-lo!' })
+    }
+    return res.json({ error: 'Você não o seguia!' })
   }
 }
