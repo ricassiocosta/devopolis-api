@@ -1,5 +1,6 @@
 const Post = require('../models/Post')
 const Dev = require('../models/Dev')
+const findDevByUsername = require('../utils/findDevByUsername')
 
 module.exports = {
   async store (req, res) {
@@ -23,12 +24,26 @@ module.exports = {
 
     return res.json(publication)
   },
-  async show (req, res) {
+
+  async index (req, res) {
     const { username } = req.params
 
-    const dev = await Dev.findOne({ github_username: username })
+    const dev = await findDevByUsername(username)
 
     const posts = await Post.find({
+      author: dev._id
+    })
+
+    return res.json(posts)
+  },
+
+  async show (req, res) {
+    const { username, post_id: postId } = req.params
+
+    const dev = await findDevByUsername(username)
+
+    const posts = await Post.find({
+      _id: postId,
       author: dev._id
     })
 
