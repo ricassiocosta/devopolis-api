@@ -4,13 +4,13 @@ const routes = require('./routes')
 
 const server = express()
 
-//Connection with MongoDB Atlas
+// Connection with MongoDB Atlas
 mongoose.connect('mongodb+srv://***REMOVED***@mongodb-altlas-kizru.mongodb.net/test?retryWrites=true&w=majority', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
+  useNewUrlParser: true,
+  useUnifiedTopology: true
 })
 
-//Server configuration
+// Server configuration
 server.use(express.json())
 server.use(routes)
 
