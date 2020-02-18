@@ -16,7 +16,7 @@ routes.post('/devs', DevController.store)
 
 routes.get('/search', SearchController.index)
 
-routes.post('/post', upload.single('thumbnail'),PostController.store)
+routes.post('/post', upload.single('thumbnail'), PostController.store)
 
 routes.get('/dashboard', DashboardController.index)
 
