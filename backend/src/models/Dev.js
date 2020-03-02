@@ -14,4 +14,8 @@ const DevSchema = new mongoose.Schema({
   }]
 })
 
+DevSchema.statics.findByUsername = function (username) {
+  return this.findOne({ github_username: username })
+}
+
 module.exports = mongoose.model('Dev', DevSchema)
