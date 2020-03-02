@@ -1,6 +1,5 @@
 const axios = require('axios')
 const Dev = require('../models/Dev')
-const findDevByUsername = require('../utils/findDevByUsername')
 
 module.exports = {
   async index (req, res) {
@@ -10,14 +9,14 @@ module.exports = {
 
   async show (req, res) {
     const { username } = req.params
-    const dev = await findDevByUsername(username)
+    const dev = await Dev.findByUsername(username)
     return res.json(dev)
   },
 
   async store (req, res) {
     const { github_username: githubUsername, techs } = req.body
 
-    let dev = await findDevByUsername(githubUsername)
+    let dev = await Dev.findByUsername(githubUsername)
 
     if (!dev) {
       const response = await axios.get(`https://api.github.com/users/${githubUsername}`)
@@ -39,7 +38,7 @@ module.exports = {
     const { dev_id: devId } = req.headers
 
     const dev = await Dev.findOne({ _id: devId })
-    const devToFollow = await findDevByUsername(username)
+    const devToFollow = await Dev.findByUsername(username)
 
     if (devToFollow && !dev.followedList.includes(devToFollow._id)) {
       await Dev.updateOne(
@@ -55,7 +54,7 @@ module.exports = {
     const { dev_id: devId } = req.headers
 
     const dev = await Dev.findOne({ _id: devId })
-    const devToFollow = await findDevByUsername(username)
+    const devToFollow = await Dev.findByUsername(username)
 
     if (devToFollow && dev.followedList.includes(devToFollow._id)) {
       await Dev.updateOne(
