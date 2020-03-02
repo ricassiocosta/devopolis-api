@@ -1,6 +1,5 @@
 const Post = require('../models/Post')
 const Dev = require('../models/Dev')
-const findDevByUsername = require('../utils/findDevByUsername')
 
 module.exports = {
   async store (req, res) {
@@ -28,7 +27,7 @@ module.exports = {
   async index (req, res) {
     const { username } = req.params
 
-    const dev = await findDevByUsername(username)
+    const dev = await Dev.findByUsername(username)
 
     const posts = await Post.find({
       author: dev._id
@@ -40,7 +39,7 @@ module.exports = {
   async show (req, res) {
     const { username, post_id: postId } = req.params
 
-    const dev = await findDevByUsername(username)
+    const dev = await Dev.findByUsername(username)
 
     const posts = await Post.find({
       _id: postId,
