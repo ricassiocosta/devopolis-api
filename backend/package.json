@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/index.js",
-    "start": "node src/index.js",
+    "dev": "nodemon index.js",
+    "start": "node index.js",
     "lint": "eslint . --ext .js",
-    "lint:fix": "npm run lint -- --fix"
+    "lint:fix": "yarn run lint --fix"
   },
   "dependencies": {
     "axios": "^0.19.2",
