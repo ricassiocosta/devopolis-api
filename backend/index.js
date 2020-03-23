@@ -1,7 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const routes = require('./routes')
-const { DATABASE_USERNAME, DATABASE_PASSWORD } = require('./env')
+const routes = require('./src/routes')
+const { DATABASE_USERNAME, DATABASE_PASSWORD, PORT } = require('./src/env')
 
 const server = express()
 
@@ -15,4 +15,4 @@ mongoose.connect(`mongodb+srv://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@mongod
 server.use(express.json())
 server.use(routes)
 
-server.listen(5000)
+server.listen(PORT)
