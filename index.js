@@ -1,9 +1,6 @@
-const dotenv = require('dotenv')
 const express = require('express')
 const mongoose = require('mongoose')
 const routes = require('./src/routes')
-
-dotenv.config()
 
 const { DATABASE_USERNAME, DATABASE_PASSWORD, PORT } = require('./src/env')
 
