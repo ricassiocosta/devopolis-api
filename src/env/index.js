@@ -1,9 +1,12 @@
-const dotenv = require('dotenv')
-dotenv.config()
+if (process.env.NODE_ENV === 'development') {
+  const dotenv = require('dotenv')
+  dotenv.config()
+}
 
 module.exports = {
   DATABASE_USERNAME: process.env.DATABASE_USERNAME || 'root',
   DATABASE_PASSWORD: process.env.DATABASE_PASSWORD || 'root',
+  NODE_ENV: process.env.NODE_ENV || 'development',
   PORT: process.env.PORT || 5000,
   GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID || '',
   GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET || '',
