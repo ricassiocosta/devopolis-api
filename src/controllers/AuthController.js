@@ -2,12 +2,11 @@
 const axios = require('axios')
 const jwt = require('jsonwebtoken')
 
-const secret = 'lucaslindo'
-
 const Dev = require('../models/Dev')
 
 const { GET_USER_URL } = require('../constants')
 const { AUTH_TOKEN_TTL } = require('../env')
+const { secret } = require('../../config')
 
 function generateBase64Token ({ id, githubUsername, name, bio }) {
   const token = jwt.sign({
