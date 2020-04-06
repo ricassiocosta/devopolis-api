@@ -12,7 +12,7 @@ const DashboardController = require('./controllers/DashboardController')
 const routes = Router()
 const upload = multer(uploadConfig)
 
-routes.get('/github/callback', CallbackController.github)
+routes.get('/callback/github', CallbackController.github)
 
 routes.post('/auth', AuthController.index)
 

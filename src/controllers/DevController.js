@@ -6,13 +6,11 @@ module.exports = {
     const devs = await Dev.find()
     return res.json(devs)
   },
-
   async show (req, res) {
     const { username } = req.params
     const dev = await Dev.findByUsername(username)
     return res.json(dev)
   },
-
   async store (req, res) {
     const { github_username: githubUsername, techs } = req.body
 
