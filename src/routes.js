@@ -3,6 +3,7 @@ const multer = require('multer')
 const uploadConfig = require('./config/upload')
 
 const CallbackController = require('./controllers/CallbackController')
+const AuthController = require('./controllers/AuthController')
 const DevController = require('./controllers/DevController')
 const SearchController = require('./controllers/SearchController')
 const PostController = require('./controllers/PostController')
@@ -12,6 +13,8 @@ const routes = Router()
 const upload = multer(uploadConfig)
 
 routes.get('/github/callback', CallbackController.github)
+
+routes.get('/auth', AuthController.index)
 
 routes.post('/devs', DevController.store) // Create a Dev
 routes.get('/devs', DevController.index) // Shows all Devs created
