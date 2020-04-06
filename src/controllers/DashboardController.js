@@ -3,7 +3,7 @@ const Dev = require('../models/Dev')
 
 module.exports = {
   async index (req, res) {
-    const { dev_id: devId } = req.headers
+    const { id: devId } = res.locals.user
 
     const dev = await Dev.findOne({ _id: devId })
     const dashboardParticipants = dev.followedList

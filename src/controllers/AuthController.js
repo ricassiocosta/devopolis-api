@@ -32,7 +32,7 @@ module.exports = {
     })
 
     const { data } = response
-    const { github_username: githubUsername, name, bio } = data
+    const { login: githubUsername, name, bio } = data
 
     let existingUser = await Dev.findByUsername(githubUsername)
     if (!existingUser) {

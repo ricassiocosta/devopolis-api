@@ -33,7 +33,7 @@ module.exports = {
   },
   async follow (req, res) {
     const { username } = req.params
-    const { dev_id: devId } = req.headers
+    const { id: devId } = res.locals.user
 
     const dev = await Dev.findOne({ _id: devId })
     const devToFollow = await Dev.findByUsername(username)
@@ -49,7 +49,7 @@ module.exports = {
   },
   async unfollow (req, res) {
     const { username } = req.params
-    const { dev_id: devId } = req.headers
+    const { id: devId } = res.locals.user
 
     const dev = await Dev.findOne({ _id: devId })
     const devToFollow = await Dev.findByUsername(username)

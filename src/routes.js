@@ -2,6 +2,8 @@ const { Router } = require('express')
 const multer = require('multer')
 const uploadConfig = require('./config/upload')
 
+const { checkToken } = require('./middlewares/auth')
+
 const CallbackController = require('./controllers/CallbackController')
 const AuthController = require('./controllers/AuthController')
 const DevController = require('./controllers/DevController')
@@ -13,8 +15,9 @@ const routes = Router()
 const upload = multer(uploadConfig)
 
 routes.get('/callback/github', CallbackController.github)
-
 routes.post('/auth', AuthController.index)
+
+routes.use(checkToken)
 
 routes.post('/devs', DevController.store) // Create a Dev
 routes.get('/devs', DevController.index) // Shows all Devs created
