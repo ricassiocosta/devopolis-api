@@ -5,7 +5,7 @@ module.exports = {
   async store (req, res) {
     const { filename } = req.file
     const { title, post } = req.body
-    const { dev_id: devId } = req.headers
+    const { id: devId } = res.locals.user
 
     const dev = await Dev.findById(devId)
     if (!dev) {

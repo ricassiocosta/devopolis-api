@@ -1,10 +1,14 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const cors = require('cors')
+
 const routes = require('./src/routes')
 
 const { DATABASE_USERNAME, DATABASE_PASSWORD, PORT } = require('./src/env')
 
-const server = express()
+const app = express()
+
+app.use(cors())
 
 // Connection with MongoDB Atlas
 mongoose.connect(`mongodb+srv://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@mongodb-altlas-kizru.mongodb.net/test?retryWrites=true&w=majority`, {
@@ -12,8 +16,8 @@ mongoose.connect(`mongodb+srv://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@mongod
   useUnifiedTopology: true
 })
 
-// Server configuration
-server.use(express.json())
-server.use(routes)
+// app configuration
+app.use(express.json())
+app.use(routes)
 
-server.listen(PORT)
+app.listen(PORT)

@@ -23,7 +23,7 @@ function generateBase64Token ({ id, githubUsername, name, bio }) {
 
 module.exports = {
   async index (req, res) {
-    const githubToken = req.query.github_token
+    const githubToken = req.body.github_token
 
     const response = await axios.get(GET_USER_URL, {
       headers: {
@@ -32,7 +32,7 @@ module.exports = {
     })
 
     const { data } = response
-    const { github_username: githubUsername, name, bio } = data
+    const { login: githubUsername, name, bio } = data
 
     let existingUser = await Dev.findByUsername(githubUsername)
     if (!existingUser) {

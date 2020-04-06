@@ -6,13 +6,11 @@ module.exports = {
     const devs = await Dev.find()
     return res.json(devs)
   },
-
   async show (req, res) {
     const { username } = req.params
     const dev = await Dev.findByUsername(username)
     return res.json(dev)
   },
-
   async store (req, res) {
     const { github_username: githubUsername, techs } = req.body
 
@@ -35,7 +33,7 @@ module.exports = {
   },
   async follow (req, res) {
     const { username } = req.params
-    const { dev_id: devId } = req.headers
+    const { id: devId } = res.locals.user
 
     const dev = await Dev.findOne({ _id: devId })
     const devToFollow = await Dev.findByUsername(username)
@@ -51,7 +49,7 @@ module.exports = {
   },
   async unfollow (req, res) {
     const { username } = req.params
-    const { dev_id: devId } = req.headers
+    const { id: devId } = res.locals.user
 
     const dev = await Dev.findOne({ _id: devId })
     const devToFollow = await Dev.findByUsername(username)
