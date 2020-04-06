@@ -14,7 +14,7 @@ const upload = multer(uploadConfig)
 
 routes.get('/github/callback', CallbackController.github)
 
-routes.get('/auth', AuthController.index)
+routes.post('/auth', AuthController.index)
 
 routes.post('/devs', DevController.store) // Create a Dev
 routes.get('/devs', DevController.index) // Shows all Devs created
