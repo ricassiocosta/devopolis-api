@@ -13,6 +13,17 @@ module.exports = {
       }
     })
 
-    return res.json({ posts })
+    const newPostsPromise = posts.map(async (post) => {
+      const author = await Dev.findById(post.author)
+      return {
+        ...post._doc,
+        author: author.github_username,
+        authorPhoto: author.avatar_url
+      }
+    })
+
+    const newPosts = await Promise.all(newPostsPromise)
+
+    return res.json({ posts: newPosts })
   }
 }
