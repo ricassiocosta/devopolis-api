@@ -50,6 +50,6 @@ module.exports = {
       bio
     })
 
-    return res.json({ token })
+    return res.json({ token, username: githubUsername })
   }
 }
