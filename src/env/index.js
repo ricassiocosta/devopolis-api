@@ -6,6 +6,7 @@ if (process.env.NODE_ENV !== 'production') {
 module.exports = {
   DATABASE_USERNAME: process.env.DATABASE_USERNAME || 'root',
   DATABASE_PASSWORD: process.env.DATABASE_PASSWORD || 'root',
+  DATABASE_HOST_NAME: process.env.DATABASE_HOST_NAME || 'localhost',
   NODE_ENV: process.env.NODE_ENV || 'development',
   PORT: process.env.PORT || 5000,
   GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID || '',
