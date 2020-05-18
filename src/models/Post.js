@@ -7,7 +7,10 @@ const PostSchema = new mongoose.Schema({
   },
   title: String,
   post: String,
-  thumbnail: String
+  thumbnail: {
+    type: String,
+    data: Buffer
+  }
 })
 
 module.exports = mongoose.model('Post', PostSchema)
