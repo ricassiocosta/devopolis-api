@@ -1,6 +1,5 @@
 const { Router } = require('express')
-const multer = require('multer')
-const uploadConfig = require('./config/upload')
+const multer = require('multer')()
 
 const { checkToken } = require('./middlewares/auth')
 
@@ -12,7 +11,6 @@ const PostController = require('./controllers/PostController')
 const DashboardController = require('./controllers/DashboardController')
 
 const routes = Router()
-const upload = multer(uploadConfig)
 
 routes.get('/callback/github', CallbackController.github)
 routes.post('/auth', AuthController.index)
@@ -27,7 +25,7 @@ routes.delete('/devs/:username/unfollow', DevController.unfollow) // Unfollow a 
 
 routes.get('/search', SearchController.index) // Search Devs by techs
 
-routes.post('/posts', upload.single('thumbnail'), PostController.store) // Create posts
+routes.post('/posts', multer.single('thumbnail'), PostController.store) // Create posts
 routes.get('/posts/:username', PostController.index) // Shows all dev's posts
 routes.get('/posts/:username/:post_id', PostController.show) // Shows a specific post from a dev
 

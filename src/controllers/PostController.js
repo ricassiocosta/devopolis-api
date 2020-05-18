@@ -3,7 +3,7 @@ const Dev = require('../models/Dev')
 
 module.exports = {
   async store (req, res) {
-    const { filename } = req.file
+    const { buffer } = req.file
     const { title, post } = req.body
     const { id: devId } = res.locals.user
 
@@ -16,14 +16,13 @@ module.exports = {
 
     const publication = await Post.create({
       author: devId,
-      thumbnail: filename,
+      thumbnail: Buffer.from(buffer).toString('base64'),
       title,
       post
     })
 
     return res.json(publication)
   },
-
   async index (req, res) {
     const { username } = req.params
 
@@ -35,7 +34,6 @@ module.exports = {
 
     return res.json(posts)
   },
-
   async show (req, res) {
     const { username, post_id: postId } = req.params
 

@@ -4,14 +4,14 @@ const cors = require('cors')
 
 const routes = require('./src/routes')
 
-const { DATABASE_USERNAME, DATABASE_PASSWORD, PORT } = require('./src/env')
+const { DATABASE_USERNAME, DATABASE_PASSWORD, DATABASE_HOST_NAME, PORT } = require('./src/env')
 
 const app = express()
 
 app.use(cors())
 
 // Connection with MongoDB Atlas
-mongoose.connect(`mongodb+srv://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@mongodb-altlas-kizru.mongodb.net/test?retryWrites=true&w=majority`, {
+mongoose.connect(`mongodb+srv://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST_NAME}.mongodb.net/test?retryWrites=true&w=majority`, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
