@@ -1,14 +1,19 @@
-const Dev = require('../models/Dev')
+const searchApplication = require('../application/search.application')
 
 module.exports = {
   async index (req, res) {
-    const { techs } = req.query
+    const { search_by: searchBy, search_query: searchQuery } = req.query
 
-    const devs = await Dev.find({
-      techs: {
-        $in: techs
+    try {
+      const devs = await searchApplication.execute(searchBy, searchQuery)
+      if (!devs.length) {
+        return res.sendStatus(404)
       }
-    })
-    return res.json({ devs })
+
+      return res.json({ devs })
+    } catch (err) {
+      console.log({ err })
+      return res.sendStatus(500)
+    }
   }
 }
