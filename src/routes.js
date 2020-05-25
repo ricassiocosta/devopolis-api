@@ -1,7 +1,9 @@
 const { Router } = require('express')
 const multer = require('multer')()
+const { query } = require('express-validator')
 
 const { checkToken, verifyJWT } = require('./middlewares/auth')
+const { checkValidation } = require('./middlewares/base-middleware')
 
 const CallbackController = require('./controllers/CallbackController')
 const AuthController = require('./controllers/AuthController')
@@ -23,7 +25,14 @@ routes.get('/devs/:username', DevController.show) // Show a single Dev
 routes.post('/devs/:username/follow', DevController.follow) // Follow a Dev
 routes.delete('/devs/:username/unfollow', DevController.unfollow) // Unfollow a Dev
 
-routes.get('/search', SearchController.index) // Search Devs
+routes.get('/search', [
+  query('search_query')
+    .isLength({ min: 3 })
+    .withMessage('The search query string should be at least 3'),
+  query('search_by')
+    .optional(),
+  checkValidation
+], SearchController.index) // Search Devs
 
 routes.post('/posts', multer.single('thumbnail'), PostController.store) // Create posts
 routes.get('/posts/:username', PostController.index) // Shows all dev's posts
