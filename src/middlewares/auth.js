@@ -13,7 +13,16 @@ const checkToken = (req, res, next) => {
     return res.status(401).send('Invalid credentials')
   }
 
+  next()
+}
+
+const verifyJWT = (req, res, next) => {
+  const authorization = req.headers['x-access-token'] || req.headers.authorization
+
+  const [, base64Encoded] = authorization.split(' ')
+
   const token = Buffer.from(base64Encoded, 'base64').toString('utf8')
+
   jwt.verify(token, secret, (err, decoded) => {
     if (err) {
       if (err.name === 'TokenExpiredError') {
@@ -38,9 +47,9 @@ const checkToken = (req, res, next) => {
       }
     }
   })
-  next()
 }
 
 module.exports = {
-  checkToken: checkToken
+  checkToken,
+  verifyJWT
 }
