@@ -6,10 +6,6 @@ module.exports = {
 
     try {
       const devs = await searchApplication.execute(searchBy, searchQuery)
-      if (!devs.length) {
-        return res.sendStatus(404)
-      }
-
       return res.json({ devs })
     } catch (err) {
       console.log({ err })
