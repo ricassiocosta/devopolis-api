@@ -62,5 +62,10 @@ module.exports = {
       return res.json({ sucess: 'Você deixou de segui-lo!' })
     }
     return res.json({ error: 'Você não o seguia!' })
+  },
+  async findById (req, res) {
+    const { id: devId } = res.locals.user
+    const dev = await Dev.findOne({ _id: devId })
+    return res.json(dev)
   }
 }
