@@ -19,7 +19,8 @@ routes.use(checkToken)
 
 routes.post('/devs', DevController.store) // Create a Dev
 routes.get('/devs', DevController.index) // Shows all Devs created
-routes.get('/devs/:username', DevController.show) // Show a single Dev
+routes.get('/devs/:username', DevController.show) // Show a single Dev using username
+routes.get('/devs/posts/:devId', DevController.findById) // Show a single Dev using id
 routes.post('/devs/:username/follow', DevController.follow) // Follow a Dev
 routes.delete('/devs/:username/unfollow', DevController.unfollow) // Unfollow a Dev
 
