@@ -35,7 +35,7 @@ module.exports = {
     const { username } = req.params
     const { id: devId } = res.locals.user
 
-    const dev = await Dev.findOne({ _id: devId })
+    let dev = await Dev.findOne({ _id: devId })
     const devToFollow = await Dev.findByUsername(username)
 
     if (devToFollow && !dev.followedList.includes(devToFollow._id)) {
@@ -43,15 +43,15 @@ module.exports = {
         { _id: devId },
         { $push: { followedList: devToFollow._id } }
       )
-      return res.json({ sucess: 'Seguindo!' })
+      dev = await Dev.findOne({ _id: devId })
     }
-    return res.json({ error: 'Você já o segue!' })
+    return res.json(dev)
   },
   async unfollow (req, res) {
     const { username } = req.params
     const { id: devId } = res.locals.user
 
-    const dev = await Dev.findOne({ _id: devId })
+    let dev = await Dev.findOne({ _id: devId })
     const devToFollow = await Dev.findByUsername(username)
 
     if (devToFollow && dev.followedList.includes(devToFollow._id)) {
@@ -59,9 +59,9 @@ module.exports = {
         { _id: devId },
         { $pull: { followedList: devToFollow._id } }
       )
-      return res.json({ sucess: 'Você deixou de segui-lo!' })
+      dev = await Dev.findOne({ _id: devId })
     }
-    return res.json({ error: 'Você não o seguia!' })
+    return res.json(dev)
   },
   async findById (req, res) {
     const { id: devId } = res.locals.user
