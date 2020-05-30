@@ -1,7 +1,9 @@
 const { Router } = require('express')
 const multer = require('multer')()
+const { query } = require('express-validator')
 
-const { checkToken } = require('./middlewares/auth')
+const { checkToken, verifyJWT } = require('./middlewares/auth')
+const { checkValidation } = require('./middlewares/base-middleware')
 
 const CallbackController = require('./controllers/CallbackController')
 const AuthController = require('./controllers/AuthController')
@@ -15,7 +17,7 @@ const routes = Router()
 routes.get('/callback/github', CallbackController.github)
 routes.post('/auth', AuthController.index)
 
-routes.use(checkToken)
+routes.use([checkToken, verifyJWT])
 
 routes.post('/devs', DevController.store) // Create a Dev
 routes.get('/devs', DevController.index) // Shows all Devs created
@@ -24,7 +26,14 @@ routes.get('/devs/posts/:devId', DevController.findById) // Show a single Dev us
 routes.post('/devs/:username/follow', DevController.follow) // Follow a Dev
 routes.delete('/devs/:username/unfollow', DevController.unfollow) // Unfollow a Dev
 
-routes.get('/search', SearchController.index) // Search Devs by techs
+routes.get('/search', [
+  query('search_query')
+    .isLength({ min: 3 })
+    .withMessage('The search query string should be at least 3'),
+  query('search_by')
+    .optional(),
+  checkValidation
+], SearchController.index) // Search Devs
 
 routes.post('/posts', multer.single('thumbnail'), PostController.store) // Create posts
 routes.get('/posts/:username', PostController.index) // Shows all dev's posts
