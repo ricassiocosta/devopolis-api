@@ -35,7 +35,7 @@ module.exports = {
     const { username } = req.params
     const { id: devId } = res.locals.user
 
-    let dev = await Dev.findOne({ _id: devId })
+    const dev = await Dev.findOne({ _id: devId })
     const devToFollow = await Dev.findByUsername(username)
 
     if (devToFollow && !dev.followedList.includes(devToFollow._id)) {
