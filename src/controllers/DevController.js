@@ -39,11 +39,8 @@ module.exports = {
     const devToFollow = await Dev.findByUsername(username)
 
     if (devToFollow && !dev.followedList.includes(devToFollow._id)) {
-      await Dev.updateOne(
-        { _id: dev._id },
-        { $push: { followedList: devToFollow._id } }
-      )
-      dev = await Dev.findOne({ _id: devId })
+      dev.followedList.push(devToFollow._id)
+      await dev.save()
     }
     return res.json(dev)
   },
