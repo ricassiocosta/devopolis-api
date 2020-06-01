@@ -35,15 +35,12 @@ module.exports = {
     const { username } = req.params
     const { id: devId } = res.locals.user
 
-    let dev = await Dev.findOne({ _id: devId })
+    const dev = await Dev.findOne({ _id: devId })
     const devToFollow = await Dev.findByUsername(username)
 
     if (devToFollow && !dev.followedList.includes(devToFollow._id)) {
-      await Dev.updateOne(
-        { _id: devId },
-        { $push: { followedList: devToFollow._id } }
-      )
-      dev = await Dev.findOne({ _id: devId })
+      dev.followedList.push(devToFollow._id)
+      await dev.save()
     }
     return res.json(dev)
   },
@@ -51,15 +48,12 @@ module.exports = {
     const { username } = req.params
     const { id: devId } = res.locals.user
 
-    let dev = await Dev.findOne({ _id: devId })
-    const devToFollow = await Dev.findByUsername(username)
+    const dev = await Dev.findOne({ _id: devId })
+    const devToUnfollow = await Dev.findByUsername(username)
 
-    if (devToFollow && dev.followedList.includes(devToFollow._id)) {
-      await Dev.updateOne(
-        { _id: devId },
-        { $pull: { followedList: devToFollow._id } }
-      )
-      dev = await Dev.findOne({ _id: devId })
+    if (devToUnfollow && dev.followedList.includes(devToUnfollow._id)) {
+      dev.followedList.splice(dev.followedList.indexOf(devToUnfollow._id), 1)
+      await dev.save()
     }
     return res.json(dev)
   },
